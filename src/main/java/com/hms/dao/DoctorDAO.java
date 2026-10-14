@@ -6,11 +6,12 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-//import javax.security.auth.message.callback.PrivateKeyCallback.Request;
-import javax.servlet.http.HttpSession;
-
 import com.hms.entity.Doctor;
 
+/**
+ * DoctorDAO - Data Access Object for Doctor entity.
+ * Migrated to Jakarta EE 9+ (javax.* imports removed).
+ */
 public class DoctorDAO {
 
 	private Connection conn;
@@ -38,7 +39,6 @@ public class DoctorDAO {
 			pstmt.setString(7, doctor.getPassword());
 
 			pstmt.executeUpdate();
-			// if query inserted or all ok than
 			f = true;
 
 		} catch (Exception e) {
@@ -133,11 +133,9 @@ public class DoctorDAO {
 			pstmt.setString(5, doctor.getEmail());
 			pstmt.setString(6, doctor.getPhone());
 			pstmt.setString(7, doctor.getPassword());
-			// need to set id also for update
 			pstmt.setInt(8, doctor.getId());
 
 			pstmt.executeUpdate();
-			// if query updated or all ok than
 			f = true;
 
 		} catch (Exception e) {
@@ -187,21 +185,6 @@ public class DoctorDAO {
 			while (resultSet.next()) {
 				doctor = new Doctor();
 
-				/*
-				 * doctor.setId(resultSet.getInt("id"));
-				 * doctor.setFullName(resultSet.getString("fullName"));
-				 * doctor.setDateOfBirth(resultSet.getString("dateOfBirth"));
-				 * doctor.setQualification(resultSet.getString("qualification"));
-				 * doctor.setSpecialist(resultSet.getString("specialist"));
-				 * doctor.setEmail(resultSet.getString("email"));
-				 * doctor.setPhone(resultSet.getString("phone"));
-				 * doctor.setPassword(resultSet.getString("password"));
-				 */
-				// we can write above commented code or
-				// or
-				// the below way [here 1 2 3..serially are the column index number of doctor
-				// table]
-
 				doctor.setId(resultSet.getInt(1));
 				doctor.setFullName(resultSet.getString(2));
 				doctor.setDateOfBirth(resultSet.getString(3));
@@ -221,9 +204,6 @@ public class DoctorDAO {
 
 	}
 
-	// show total number of dynamic value in admin panel
-
-	// create all count method here to reduce code line...
 	// Count total Doctor Number
 	public int countTotalDoctor() {
 
@@ -236,7 +216,6 @@ public class DoctorDAO {
 
 			ResultSet resultSet = pstmt.executeQuery();
 			while (resultSet.next()) {
-
 				i++;
 			}
 
@@ -259,7 +238,6 @@ public class DoctorDAO {
 
 			ResultSet resultSet = pstmt.executeQuery();
 			while (resultSet.next()) {
-
 				i++;
 			}
 
@@ -283,7 +261,6 @@ public class DoctorDAO {
 
 			ResultSet resultSet = pstmt.executeQuery();
 			while (resultSet.next()) {
-
 				i++;
 			}
 
@@ -306,7 +283,6 @@ public class DoctorDAO {
 
 			ResultSet resultSet = pstmt.executeQuery();
 			while (resultSet.next()) {
-
 				i++;
 			}
 
@@ -329,7 +305,6 @@ public class DoctorDAO {
 
 			ResultSet resultSet = pstmt.executeQuery();
 			while (resultSet.next()) {
-
 				i++;
 			}
 
@@ -395,7 +370,6 @@ public class DoctorDAO {
 
 		try {
 
-			//String sql = "update doctor set fullName=?,dateOfBirth=?,qualification=?,specialist=?,email=?,phone=?,password=? where id=?";
 			String sql = "update doctor set fullName=?,dateOfBirth=?,qualification=?,specialist=?,email=?,phone=? where id=?";
 
 			PreparedStatement pstmt = this.conn.prepareStatement(sql);
@@ -405,12 +379,9 @@ public class DoctorDAO {
 			pstmt.setString(4, doctor.getSpecialist());
 			pstmt.setString(5, doctor.getEmail());
 			pstmt.setString(6, doctor.getPhone());
-			//pstmt.setString(7, doctor.getPassword());
-			// need to set id also for update
 			pstmt.setInt(7, doctor.getId());
 
 			pstmt.executeUpdate();
-			// if query updated or all okay than
 			f = true;
 
 		} catch (Exception e) {

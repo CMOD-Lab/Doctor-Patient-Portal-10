@@ -2,16 +2,20 @@ package com.hms.doctor.servlet;
 
 import java.io.IOException;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import com.hms.dao.DoctorDAO;
 import com.hms.db.DBConnection;
 
+/**
+ * DoctorChangePassword - Handles doctor password change.
+ * Updated to use jakarta.servlet.* imports (Jakarta EE 9+).
+ */
 @WebServlet("/doctorChangePassword")
 public class DoctorChangePassword extends HttpServlet {
 
@@ -29,21 +33,16 @@ public class DoctorChangePassword extends HttpServlet {
 		if (doctorDAO.checkOldPassword(doctorId, oldPassword)) {
 
 			if (doctorDAO.changePassword(doctorId, newPassword)) {
-				
 				session.setAttribute("successMsg", "Password change successfully.");
 				resp.sendRedirect("doctor/edit_profile.jsp");
-
 			} else {
-				
 				session.setAttribute("errorMsg", "Something went wrong on server!");
 				resp.sendRedirect("doctor/edit_profile.jsp");
-
 			}
 
 		} else {
 			session.setAttribute("errorMsg", "Old Password not match");
 			resp.sendRedirect("doctor/edit_profile.jsp");
-
 		}
 	}
 

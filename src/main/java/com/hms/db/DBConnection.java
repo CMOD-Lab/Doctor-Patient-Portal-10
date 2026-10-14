@@ -3,6 +3,10 @@ package com.hms.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+/**
+ * DBConnection - Provides JDBC connection to MySQL database.
+ * Updated to use com.mysql.cj.jdbc.Driver (MySQL Connector/J 8.x+).
+ */
 public class DBConnection {
 
 	private static Connection conn;
@@ -11,15 +15,18 @@ public class DBConnection {
 		
 		try {
 			
-			//step:1 for connection - load the driver class 
+			// Load the MySQL JDBC driver (com.mysql.cj.jdbc.Driver for MySQL 8.x+)
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			
-			//step:2- create a connection
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital","root","wasim");
+			// Create a connection with timezone and SSL parameters for Java 17 compatibility
+			conn = DriverManager.getConnection(
+				"jdbc:mysql://localhost:3306/hospital?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true",
+				"root",
+				"wasim"
+			);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			// TODO: handle exception
 		}
 		
 		return conn;

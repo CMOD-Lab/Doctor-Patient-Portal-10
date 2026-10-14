@@ -2,17 +2,21 @@ package com.hms.admin.servlet;
 
 import java.io.IOException;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import com.hms.dao.DoctorDAO;
 import com.hms.db.DBConnection;
 import com.hms.entity.Doctor;
 
+/**
+ * UpdateDoctorServlet - Handles updating doctor details by admin.
+ * Updated to use jakarta.servlet.* imports (Jakarta EE 9+).
+ */
 @WebServlet("/updateDoctor")
 public class UpdateDoctorServlet extends HttpServlet {
 
@@ -21,7 +25,6 @@ public class UpdateDoctorServlet extends HttpServlet {
 
 		try {
 
-			// get all data which is coming from doctor.jsp doctor details
 			String fullName = req.getParameter("fullName");
 			String dateOfBirth = req.getParameter("dateOfBirth");
 			String qualification = req.getParameter("qualification");
@@ -29,9 +32,6 @@ public class UpdateDoctorServlet extends HttpServlet {
 			String email = req.getParameter("email");
 			String phone = req.getParameter("phone");
 			String password = req.getParameter("password");
-			
-			//here need to get id also...for updating the doctor details
-			//doctors will update based on respective doctor's id
 			int id = Integer.parseInt(req.getParameter("id"));
 
 			Doctor doctor = new Doctor(id, fullName, dateOfBirth, qualification, specialist, email, phone, password);
@@ -45,7 +45,6 @@ public class UpdateDoctorServlet extends HttpServlet {
 			if (f == true) {
 				session.setAttribute("successMsg", "Doctor update Successfully");
 				resp.sendRedirect("admin/view_doctor.jsp");
-
 			} else {
 				session.setAttribute("errorMsg", "Something went wrong on server!");
 				resp.sendRedirect("admin/view_doctor.jsp");
